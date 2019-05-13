@@ -9,7 +9,6 @@ export default (state = initialState, action) => {
     
     switch(action.type){
         case MAKE_TODO: 
-        console.log(action)
         return {
             todo: state.todo.concat(action.newTodo)
         }
