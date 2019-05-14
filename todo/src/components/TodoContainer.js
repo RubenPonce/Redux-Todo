@@ -4,22 +4,29 @@ import { make_todo } from "../actions";
 import { connect } from "react-redux";
 export class TodoContainer extends Component {
   state = {
-    todo: ""
+    todos: []
   };
   handleChange = e => {
+
     this.setState({
-      todo: e.target.value
+      todos: [...this.state.todos,{
+        value: `${e.target.value}`,
+        completed: false,
+      }]
     });
   };
   formSubmit = (e, makeTodo) => {
     e.preventDefault();
 
-    makeTodo(this.state.todo);
+    makeTodo(this.state.todos);
   };
   render() {
+    console.log(this.props);
+    
     return (
       <div className="todo-container">
-        {this.props.todo.map((todo, i) => {
+        {this.props.todos.map((todo, i) => {
+          console.log(todo)
           return <Todo todo={todo} key={i} />;
         })}
         <form onSubmit={e => this.formSubmit(e, this.props.make_todo)}>
@@ -38,8 +45,9 @@ export class TodoContainer extends Component {
   }
 }
 const mapStateToProps = state => {
+  console.log(state)
   return {
-    todo: state.todo
+    todos: state.todos
   };
 };
 

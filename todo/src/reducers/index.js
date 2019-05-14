@@ -1,14 +1,16 @@
 import { MAKE_TODO } from "../actions";
 
 const initialState = {
-  todo: []
+  todos: []
 };
 
 export default (state = initialState, action) => {
+  console.log(state.todos)
   switch (action.type) {
     case MAKE_TODO:
+    console.log(action.nextTodo)
       return {
-        todo: state.todo.concat(action.newTodo)
+        todos: action.nextTodo
       };
     default:
       return state;
