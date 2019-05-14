@@ -5,3 +5,6 @@ button{
   width: 150px;
   font-size: 1em;
 }
+body{
+  background: teal;
+}
