@@ -1,13 +1,14 @@
 import React from 'react'
 
 export default function Todo(props) {
-    console.log(props);
-    console.log('h4llo');
+    console.log(props.todo.value)
     
   return (
-    <div>
-      <h1>{props.todo.value}</h1>
-      
+    <div className="todo-container">
+      <h1 onClick={(e)=>props.toggleCompleted(e,props.todo)}>{props.todo.value}</h1>
+     {console.log(props.todo.completed)}
+    {props.todo.completed ? <p>Nice Work!</p> : null}
     </div>
   )
 }
+

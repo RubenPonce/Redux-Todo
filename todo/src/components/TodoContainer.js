@@ -1,25 +1,33 @@
 import React, { Component } from "react";
 import Todo from "./Todo";
-import { make_todo } from "../actions";
+import { make_todo, toggle_completed } from "../actions";
 import { connect } from "react-redux";
 export class TodoContainer extends Component {
   state = {
-    todos: []
+    todos: [],
+    inputValue: ''
   };
   handleChange = e => {
-
     this.setState({
-      todos: [...this.state.todos,{
-        value: `${e.target.value}`,
-        completed: false,
-      }]
-    });
+      inputValue: e.target.value,
+    })
   };
+
+  
   formSubmit = (e, makeTodo) => {
     e.preventDefault();
-
-    makeTodo(this.state.todos);
+    console.log(e.target.todo.value)
+    this.setState({
+      inputValue: '',
+    });
+    makeTodo([...this.state.todos,{
+      value: e.target.todo.value,
+      completed: false,
+      id: Date.now(),
+      
+    }]);
   };
+  
   render() {
     console.log(this.props);
     
@@ -27,8 +35,9 @@ export class TodoContainer extends Component {
       <div className="todo-container">
         {this.props.todos.map((todo, i) => {
           console.log(todo)
-          return <Todo todo={todo} key={i} />;
+          return <Todo todo={todo} toggleCompleted = {(e)=>this.props.toggle_completed(e,todo)} key={i} />;
         })}
+
         <form onSubmit={e => this.formSubmit(e, this.props.make_todo)}>
           <input
             type="text"
@@ -36,6 +45,7 @@ export class TodoContainer extends Component {
             placeholder="thisthing"
             onChange={this.handleChange}
             name="todo"
+            value={this.state.inputValue}
           />
           <button>add banana</button>
         </form>
@@ -53,5 +63,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { make_todo }
+  { make_todo, toggle_completed }
 )(TodoContainer);
